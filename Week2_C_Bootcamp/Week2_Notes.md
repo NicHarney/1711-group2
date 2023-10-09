@@ -1,0 +1,1 @@
+gcc first.c -o first - compiles the program (first.c is the code name, first is name of compiled file)
