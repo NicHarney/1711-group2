@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main(){
+
+    int a;
+    printf("Enter the option you would like: ");
+    scanf("%d",&a);
+
+    if (0 < a && a < 3);{
+
+    
+
+        switch(a){
+            case 0; printf("Option 0 has been selected\n");
+                break;
+
+            case 1; printf("Option 1 has been selected\n");
+                break;
+
+            case 2; printf("Option 2 has been selected");
+                break;
+
+            case 3; printf("Option 3 has been selected");
+                break;
+
+        }
+    }
+    else {
+        printf("Invalid option selected\n");
+    }
+
+    return 0;
+}
