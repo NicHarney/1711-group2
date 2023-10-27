@@ -73,22 +73,18 @@ int main() {
         strcpy(fitness[i].time,time);
         fitness[i].steps = atoi(steps);
 
-
-        //print the record stored if its in the first 3 file lines
-        if (line_number<3){
-
-            printf("%s/%s/%d\n",fitness[i].date,fitness[i].time,fitness[i].steps);
-        }
-
         i++;
         line_number++;
-        
-
     }
 
     //display number of records stored
     printf("Number of records in file: %d\n",line_number);
     
+    //print the record stored if its in the first 3 file lines
+    for(i = 0; i<3;i++){
+
+        printf("%s/%s/%d\n",fitness[i].date,fitness[i].time,fitness[i].steps);
+    }
     
     fclose(file);
 
