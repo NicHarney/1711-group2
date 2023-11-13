@@ -49,6 +49,7 @@ int main() {
     char line_buffer[buffer_size];
     int i = 0;
     bool exit = false;
+    bool file_inputted = false;
 
     //opening file
     FILE *file = fopen("FitnessData_2023.csv","r");
@@ -88,6 +89,7 @@ int main() {
         printf("D: Find the date and time of the timeslot with the largest number of steps\n");
         printf("E: Find the mean step count of all the records in the file\n");
         printf("F: Find the longest continuous period where the step count is above 500 steps\n");
+        printf("Q: Exit\n");
         scanf(" %c",&menu_choice);
 
 
@@ -100,40 +102,45 @@ int main() {
         char largest_time[6]; strcpy(largest_time,fitness[0].time);
 
         switch(menu_choice){
-            case 'A':
+            case 'A': file_inputted = true;
                 break;
-            
-            case 'B':printf("Number of records in file: %d\n",line_number);
-                break;
+            if file_inputted == true;
+                case 'B':printf("Number of records in file: %d\n",line_number);
+                    break;
 
-            case 'C':
-            
-
-                for (i = 0; i < line_number; i++){
-
-                    if (fitness[i].steps < fewest_steps){
-                        fewest_steps = fitness[i].steps;
-                        strcpy(fewest_date, fitness[i].date);
-                        strcpy(fewest_time, fitness[i].time);
-
-                    }
-                }
+                case 'C':
                 
-                printf("Fewest steps: %s %s \n",fewest_date,fewest_time);
-                break;
-            case 'D':
-                for (i = 0; i < line_number; i ++){
 
-                    if (fitness[i].steps > largest_steps){
-                        largest_steps = fitness[i].steps;
-                        strcpy(largest_date,fitness[i].date);
-                        strcpy(largest_time,fitness[i].time);
+                    for (i = 0; i < line_number; i++){
+
+                        if (fitness[i].steps < fewest_steps){
+                            fewest_steps = fitness[i].steps;
+                            strcpy(fewest_date, fitness[i].date);
+                            strcpy(fewest_time, fitness[i].time);
+
+                        }
                     }
-                }
+                    
+                    printf("Fewest steps: %s %s \n",fewest_date,fewest_time);
+                    break;
+                case 'D':
+                    for (i = 0; i < line_number; i ++){
 
-                printf("Largest steps: %s %s %d \n",largest_date,largest_time,largest_steps);
-                break;
-        }
+                        if (fitness[i].steps > largest_steps){
+                            largest_steps = fitness[i].steps;
+                            strcpy(largest_date,fitness[i].date);
+                            strcpy(largest_time,fitness[i].time);
+                        }
+                    }
+
+                    printf("Largest steps: %s %s %d \n",largest_date,largest_time,largest_steps);
+                    break;
+                case 'Q':
+                    exit = true;
+            else{
+                printf("Specify a valid file to be imported\n")
+            }
+        }   
     }
     //display number of records stored
     
