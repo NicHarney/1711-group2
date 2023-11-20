@@ -4,6 +4,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <math.h>
+
+
 
 // Define an appropriate struct
 typedef struct {
@@ -17,11 +21,12 @@ void tokeniseRecord(const char *input, const char *delimiter, char *date, char *
 
 #endif // FITNESS_DATA_STRUCT_H
 
-FILE open_file(char *fileName, char *mode){
-	FILE *file = fopen(fileName,mode);
-    if (!file){
+FILE *open_file(char *filename, char *mode){
+	FILE *file = fopen(filename,mode);
+    if (file == NULL){
         printf("Error opening file\n");
-        return 1;
+        return NULL;
+        
     }
 
 	return file;

@@ -45,38 +45,21 @@ void tokeniseRecord(const char *input, const char *delimiter,
 int main() {
    //declaring array structure and file variables
     FITNESS_DATA fitness[1000];
-    int buffer_size = 250;
+    int buffer_size = 1000;
     char line_buffer[buffer_size];
     char filename[buffer_size];
     int i = 0;
+    
     bool exit = false;
     bool file_inputted = false;
-
+    
     //opening file
     
 
-    char date[11];
-    char time[6];
-    char steps[100];
-    int line_number = 0;
-
-
-    //filter through the file line by line and storing each variable
-    while (fgets(line_buffer,buffer_size,file)){
-
-        tokeniseRecord(line_buffer,",",date,time,steps);
-
-        //copy contents stored in the temporary variables to the array struct
-        strcpy(fitness[i].date,date);
-        strcpy(fitness[i].time,time);
-        fitness[i].steps = atoi(steps);
-
-        i++;
-        line_number++;
-    }
+    
     while(exit == false){
 
-    
+       
         char menu_choice;
 
         printf("Menu Options:\n");
@@ -89,7 +72,15 @@ int main() {
         printf("Q: Exit\n");
         scanf(" %c",&menu_choice);
 
+        if (menu_choice == 'A' || menu_choice == 'a'){
+        
+            file_inputted = true;
+        }
 
+        if (file_inputted != true){
+            printf("Specify the filename to be used\n");
+            break;
+        }
         
         
         switch(menu_choice){
@@ -97,11 +88,32 @@ int main() {
             case 'a':
                 printf("Enter the file name: ");
 
-                fgets(line, buffer_size, stdin);
-                sscanf(line, " %s ", filename);
+                fgets(line_buffer, buffer_size, stdin);
+                scanf(line_buffer, " %s ", filename);
 
                 FILE *file = open_file(filename,"r");
-                file_inputted = true;
+                
+                
+                char date[11];
+                char time[6];
+                char steps[100];
+                int line_number = 0;
+
+                
+                //filter through the file line by line and storing each variable
+                while (fgets(line_buffer,buffer_size,file)){
+
+                    tokeniseRecord(line_buffer,",",date,time,steps);
+
+                    //copy contents stored in the temporary variables to the array struct
+                    strcpy(fitness[i].date,date);
+                    strcpy(fitness[i].time,time);
+                    fitness[i].steps = atoi(steps);
+
+                    i++;
+                    line_number++;
+                }
+                
                 break;
                 
             case 'B': 
@@ -123,10 +135,11 @@ int main() {
                 exit = true;
         
         }   
+        
     }
 
     
-    fclose(file);
+    //fclose(file);
 
     return 0;
 }
