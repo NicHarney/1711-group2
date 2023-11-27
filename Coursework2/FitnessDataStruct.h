@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-
+#define buffer_size 1000
 
 // Define an appropriate struct
 typedef struct {
@@ -22,6 +22,13 @@ void tokeniseRecord(const char *input, const char *delimiter, char *date, char *
 #endif // FITNESS_DATA_STRUCT_H
 
 FILE *open_file(char *filename, char *mode){
+    char line_buffer[buffer_size];
+    //char filename2[100];
+     printf("Enter the file name: ");
+
+    fgets(line_buffer, buffer_size, stdin);
+    sscanf(line_buffer, " %s ", filename);
+
 	FILE *file = fopen(filename,mode);
     if (file == NULL){
         printf("Error opening file\n");

@@ -45,22 +45,69 @@ void tokeniseRecord(const char *input, const char *delimiter,
 int main() {
    //declaring array structure and file variables
     FITNESS_DATA fitness[1000];
-    int buffer_size = 1000;
+    char menu_choice;
+   
     char line_buffer[buffer_size];
     char filename[buffer_size];
     int i = 0;
+    char date[11];
+    char time[6];
+    char steps[100];
+    int line_number = 0;
     
     bool exit = false;
     bool file_inputted = false;
-    
-    //opening file
-    
 
+    printf("Menu Options:\n");
+    printf("A: Specify the File name to be imported\n");
+    printf("B: Display the total number of records in the file \n");
+    printf("C: Find the date and time of the timeslot with the fewest steps\n");
+    printf("D: Find the date and time of the timeslot with the largest number of steps\n");
+    printf("E: Find the mean step count of all the records in the file\n");
+    printf("F: Find the longest continuous period where the step count is above 500 steps\n");
+    printf("Q: Exit\n");
+    scanf(" %c",&menu_choice);
+
+    if (menu_choice == 'A' || menu_choice == 'a'){
+        FILE *file = open_file(filename,"r");
+        if (file == NULL)
+            return 1;
+        while (fgets(line_buffer,buffer_size,file)){
+
+                tokeniseRecord(line_buffer,",",date,time,steps);
+
+                //copy contents stored in the temporary variables to the array struct
+                strcpy(fitness[i].date,date);
+                strcpy(fitness[i].time,time);
+                fitness[i].steps = atoi(steps);
+
+                i++;
+                line_number++;
+            }
+    }
+    /*else{
+        printf("Enter name");
+        main();
+    }
+            
+            //filter through the file line by line and storing each variable
+            
+
+            //file_inputted = true;
+        //}        
+        /*else{
+            printf("Specify the filename to be used\n");
+            break;
+        }
+        */
+        
+   // }
+    
     
     while(exit == false){
 
        
-        char menu_choice;
+        
 
         printf("Menu Options:\n");
         printf("A: Specify the File name to be imported\n");
@@ -72,48 +119,15 @@ int main() {
         printf("Q: Exit\n");
         scanf(" %c",&menu_choice);
 
-        if (menu_choice == 'A' || menu_choice == 'a'){
-        
-            file_inputted = true;
-        }
+    
 
-        if (file_inputted != true){
-            printf("Specify the filename to be used\n");
-            break;
-        }
+        
         
         
         switch(menu_choice){
             case 'A': 
             case 'a':
-                printf("Enter the file name: ");
-
-                fgets(line_buffer, buffer_size, stdin);
-                scanf(line_buffer, " %s ", filename);
-
-                FILE *file = open_file(filename,"r");
-                
-                
-                char date[11];
-                char time[6];
-                char steps[100];
-                int line_number = 0;
-
-                
-                //filter through the file line by line and storing each variable
-                while (fgets(line_buffer,buffer_size,file)){
-
-                    tokeniseRecord(line_buffer,",",date,time,steps);
-
-                    //copy contents stored in the temporary variables to the array struct
-                    strcpy(fitness[i].date,date);
-                    strcpy(fitness[i].time,time);
-                    fitness[i].steps = atoi(steps);
-
-                    i++;
-                    line_number++;
-                }
-                
+                printf("Filename already specified\n");
                 break;
                 
             case 'B': 
