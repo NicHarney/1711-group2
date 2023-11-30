@@ -57,57 +57,9 @@ int main() {
     
     bool exit = false;
     bool file_inputted = false;
-
-    printf("Menu Options:\n");
-    printf("A: Specify the File name to be imported\n");
-    printf("B: Display the total number of records in the file \n");
-    printf("C: Find the date and time of the timeslot with the fewest steps\n");
-    printf("D: Find the date and time of the timeslot with the largest number of steps\n");
-    printf("E: Find the mean step count of all the records in the file\n");
-    printf("F: Find the longest continuous period where the step count is above 500 steps\n");
-    printf("Q: Exit\n");
-    scanf(" %c",&menu_choice);
-
-    if (menu_choice == 'A' || menu_choice == 'a'){
-        FILE *file = open_file(filename,"r");
-        if (file == NULL)
-            return 1;
-        while (fgets(line_buffer,buffer_size,file)){
-
-                tokeniseRecord(line_buffer,",",date,time,steps);
-
-                //copy contents stored in the temporary variables to the array struct
-                strcpy(fitness[i].date,date);
-                strcpy(fitness[i].time,time);
-                fitness[i].steps = atoi(steps);
-
-                i++;
-                line_number++;
-            }
-    }
-    /*else{
-        printf("Enter name");
-        main();
-    }
-            
-            //filter through the file line by line and storing each variable
-            
-
-            //file_inputted = true;
-        //}        
-        /*else{
-            printf("Specify the filename to be used\n");
-            break;
-        }
-        */
-        
-   // }
+   
     
-    
-    while(exit == false){
-
-       
-        
+    while(true){
 
         printf("Menu Options:\n");
         printf("A: Specify the File name to be imported\n");
@@ -119,41 +71,82 @@ int main() {
         printf("Q: Exit\n");
         scanf(" %c",&menu_choice);
 
+        while (getchar() != '\n');
+        if (file_inputted == false){
+            if (menu_choice == 'A' || menu_choice == 'a'){
+                
+                FILE *file = open_file(filename,"r");
+                if (file == NULL)
+                    return 1;
+                while (fgets(line_buffer,buffer_size,file)){
+
+                        tokeniseRecord(line_buffer,",",date,time,steps);
+
+                        //copy contents stored in the temporary variables to the array struct
+                        strcpy(fitness[i].date,date);
+                        strcpy(fitness[i].time,time);
+                        fitness[i].steps = atoi(steps);
+
+                        i++;
+                        line_number++;
+                }
+            }
+        
+        }
+
+       if (menu_choice == 'q' || menu_choice == 'Q'){
+        break;
+       }
+
     
 
         
         
-        
-        switch(menu_choice){
-            case 'A': 
-            case 'a':
-                printf("Filename already specified\n");
-                break;
-                
-            case 'B': 
-            case 'b':
-                display_records(fitness,line_number);
-                break;
+        if (file_inputted == true){
+            switch(menu_choice){
+                case 'A': 
+                case 'a':
+                    printf("Filename already specified\n");
+                    break;
+                    
+                case 'B': 
+                case 'b':
+                    display_records(fitness,line_number);
+                    break;
 
-            case 'C':
-            case 'c':
-                steps_lowest(fitness, line_number);
-                break;
+                case 'C':
+                case 'c':
+                    steps_lowest(fitness, line_number);
+                    break;
+                    
+                case 'D':
+                case 'd':
+                    steps_highest(fitness, line_number);
+                    break;
+                case 'E':
+                case 'e':
+                    mean_steps(fitness,line_number);
+                    break;
+
+                default:
+                    printf("Invalid input\n");
+                    break;
                 
-            case 'D':
-            case 'd':
-                steps_highest(fitness, line_number);
-                break;
-            case 'Q':
-            case 'q':
-                exit = true;
-        
-        }   
+            }
+        } 
+        else{
+            if (menu_choice != 'A' && menu_choice != 'a'){
+                printf("Filename needs to be specified\n");
+            }
+            else{
+                file_inputted = true;
+            }
+        }  
         
     }
 
     
-    //fclose(file);
+    
 
     return 0;
 }

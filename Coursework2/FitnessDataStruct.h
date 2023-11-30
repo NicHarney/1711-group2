@@ -28,12 +28,15 @@ FILE *open_file(char *filename, char *mode){
 
     fgets(line_buffer, buffer_size, stdin);
     sscanf(line_buffer, " %s ", filename);
-
+    //getchar();
 	FILE *file = fopen(filename,mode);
     if (file == NULL){
         printf("Error opening file\n");
         return NULL;
         
+    }
+    else{
+        printf("File successfully loaded.\n");
     }
 
 	return file;
@@ -83,5 +86,15 @@ int steps_highest(FITNESS_DATA *dataArray, int numLines){
                     }
                 }
 
-                printf("Largest steps: %s %s %d \n",largest_date,largest_time,largest_steps);
+                printf("Largest steps: %s %s  \n",largest_date,largest_time);
+}
+
+int mean_steps(FITNESS_DATA *dataArray,int numLines){
+    int mean_steps = 0;
+    for (int i = 0; i < numLines; i++){
+        mean_steps += dataArray[i].steps;
+    }
+
+    mean_steps = mean_steps/numLines;
+    printf("The mean step count is %d\n",mean_steps);
 }
