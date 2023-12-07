@@ -127,7 +127,10 @@ int main() {
                 case 'e':
                     mean_steps(fitness,line_number);
                     break;
-
+                case 'F':
+                case 'f':
+                    steps_continued(fitness,line_number);
+                    break;
                 default:
                     printf("Invalid input\n");
                     break;

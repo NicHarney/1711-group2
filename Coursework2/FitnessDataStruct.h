@@ -44,7 +44,7 @@ FILE *open_file(char *filename, char *mode){
 
 
 int display_records(FITNESS_DATA *dataArray,int numLines){
-	printf("Number of records in file: %d\n",numLines);
+	printf("Total records: %d\n",numLines);
 }
 
 int steps_lowest(FITNESS_DATA *dataArray, int numLines){
@@ -90,11 +90,45 @@ int steps_highest(FITNESS_DATA *dataArray, int numLines){
 }
 
 int mean_steps(FITNESS_DATA *dataArray,int numLines){
-    int mean_steps = 0;
+    float mean_steps = 0;
     for (int i = 0; i < numLines; i++){
         mean_steps += dataArray[i].steps;
     }
 
     mean_steps = mean_steps/numLines;
-    printf("The mean step count is %d\n",mean_steps);
+
+    printf("Mean step count: %.0f\n",mean_steps);
+}
+
+int steps_continued(FITNESS_DATA *dataArray, int numLines){
+    int count = 0;
+    int highest_count = 0;
+    char longest_start_date[200];
+    char longest_start_time[200];
+    char longest_end_date[200];
+    char longest_end_time[200];
+    int temp = 0;
+   
+    for (int i = 0; i < numLines; i++){
+
+        if (dataArray[i].steps > 500){
+            count+= 1;
+        }
+        else{
+            if (count > highest_count){
+                highest_count = count;
+                
+                strcpy(longest_start_date,dataArray[temp].date);
+                strcpy(longest_start_time, dataArray[temp].time);
+                strcpy(longest_end_date, dataArray[i-1].date);
+                strcpy(longest_end_time, dataArray[i-1].time);
+                
+            }
+            count = 0;
+            temp = i + 1;
+        }
+        
+    }
+
+    printf("Longest period start: %s %s \nLongest period end: %s %s \n",longest_start_date, longest_start_time, longest_end_date, longest_end_time);
 }
