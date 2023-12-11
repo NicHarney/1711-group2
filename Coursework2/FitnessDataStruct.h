@@ -21,6 +21,7 @@ void tokeniseRecord(const char *input, const char *delimiter, char *date, char *
 
 #endif // FITNESS_DATA_STRUCT_H
 
+//function which opens the file
 FILE *open_file(char *filename, char *mode){
     char line_buffer[buffer_size];
     //char filename2[100];
@@ -42,11 +43,13 @@ FILE *open_file(char *filename, char *mode){
 	return file;
 }
 
-
+//function which displays number of records
 int display_records(FITNESS_DATA *dataArray,int numLines){
 	printf("Total records: %d\n",numLines);
 }
 
+
+//function which displays the lowest steps
 int steps_lowest(FITNESS_DATA *dataArray, int numLines){
 
 	int fewest_steps = dataArray[0].steps;
@@ -69,6 +72,8 @@ int steps_lowest(FITNESS_DATA *dataArray, int numLines){
                 
 }
 
+
+//function which displays the highest steps
 int steps_highest(FITNESS_DATA *dataArray, int numLines){
 
 	int largest_steps = dataArray[0].steps;
@@ -89,6 +94,8 @@ int steps_highest(FITNESS_DATA *dataArray, int numLines){
                 printf("Largest steps: %s %s  \n",largest_date,largest_time);
 }
 
+
+//function which displays the mean steps
 int mean_steps(FITNESS_DATA *dataArray,int numLines){
     float mean_steps = 0;
     for (int i = 0; i < numLines; i++){
@@ -100,6 +107,8 @@ int mean_steps(FITNESS_DATA *dataArray,int numLines){
     printf("Mean step count: %.0f\n",mean_steps);
 }
 
+
+//function which displays longest period of above 500 steps
 int steps_continued(FITNESS_DATA *dataArray, int numLines){
     int count = 0;
     int highest_count = 0;

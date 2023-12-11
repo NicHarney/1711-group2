@@ -61,6 +61,8 @@ int main() {
     
     while(true){
 
+
+        //display mennu options
         printf("Menu Options:\n");
         printf("A: Specify the File name to be imported\n");
         printf("B: Display the total number of records in the file \n");
@@ -72,7 +74,11 @@ int main() {
         scanf(" %c",&menu_choice);
 
         while (getchar() != '\n');
+
+        //check the user has not already inputted a file
         if (file_inputted == false){
+
+            //check if the user has decided to input a file at all
             if (menu_choice == 'A' || menu_choice == 'a'){
                 
                 FILE *file = open_file(filename,"r");
@@ -101,7 +107,7 @@ int main() {
     
 
         
-        
+        //case statement deciding which function to go to
         if (file_inputted == true){
             switch(menu_choice){
                 case 'A': 
