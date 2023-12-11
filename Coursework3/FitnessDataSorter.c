@@ -14,13 +14,17 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, char *
     char *ptr = strtok(record, &delimiter);
     int year, month, day, hours, minutes, number;
 
-    
+    //verifying valid date input
     if (ptr != NULL && sscanf(ptr,"%4d-%2d-%2d",&year,&month,&day) == 3) {
         strcpy(date, ptr);
         ptr = strtok(NULL, &delimiter);
+
+        //verifying valid time input
         if (ptr != NULL && sscanf(ptr,"%2d:%2d",&hours,&minutes ) == 2 && hours >= 0 && hours <= 23 && minutes >= 0 && minutes < 60) {
             strcpy(time, ptr);
             ptr = strtok(NULL, &delimiter);
+
+            //verifying valid steps input
             if (ptr != NULL && sscanf(ptr,"%d",&number) == 1) {
                 //*steps = atoi(ptr);
                 
