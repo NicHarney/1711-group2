@@ -14,39 +14,34 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, char *
     char *ptr = strtok(record, &delimiter);
     int year, month, day, hours, minutes, number;
 
-
-    if (ptr != NULL) {
+    
+    if (ptr != NULL && sscanf(ptr,"%4d-%2d-%2d",&year,&month,&day) == 3) {
         strcpy(date, ptr);
         ptr = strtok(NULL, &delimiter);
-        if (ptr != NULL) {
+        if (ptr != NULL && sscanf(ptr,"%2d:%2d",&hours,&minutes ) == 2 && hours >= 0 && hours <= 23 && minutes >= 0 && minutes < 60) {
             strcpy(time, ptr);
             ptr = strtok(NULL, &delimiter);
-            if (ptr != NULL) {
+            if (ptr != NULL && sscanf(ptr,"%d",&number) == 1) {
                 //*steps = atoi(ptr);
                 
             
-
-            //check the date is inputted correctly
-                if(sscanf(date,"%4d-%2d-%2d",&year,&month,&day)!= 3){
-                    printf("Error: invalid file");
-                    return 1;
-                }
-
-                //check the time is inputted correctly
-                if(sscanf(time,"%2d:-%2d",&hours,&minutes)!= 2 || hours < 0 || hours > 23 | minutes < 0 || minutes > 59){
-                    printf("Error: invalid file");
-                    return 1;
-                }
-
-                //check the steps are inputted correctly
-                if (sscanf(steps,"%d",&number)!= 1 || number < 0){
-                    printf("Error: invalid file");
-                    return 1;
-                }
-
                 strcpy(steps,ptr);
             }
+            else{
+                printf("Error: invalid file");
+                return 1;
+            }
         }
+        else{
+            printf("Error: invalid file");
+            return 1;
+
+        }
+
+    }
+    else{
+        printf("Error: invalid file");
+        return 1;
     }
 }
 
