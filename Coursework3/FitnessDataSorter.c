@@ -12,41 +12,23 @@ typedef struct {
 // Function to tokenize a record
 void tokeniseRecord(char *record, char delimiter, char *date, char *time, char *steps) {
     char *ptr = strtok(record, &delimiter);
-    int year, month, day, hours, minutes, number;
-
-    //verifying valid date input
-    if (ptr != NULL && sscanf(ptr,"%4d-%2d-%2d",&year,&month,&day) == 3) {
+    
+    if (ptr != NULL) {
         strcpy(date, ptr);
         ptr = strtok(NULL, &delimiter);
-
-        //verifying valid time input
-        if (ptr != NULL && sscanf(ptr,"%2d:%2d",&hours,&minutes ) == 2 && hours >= 0 && hours <= 23 && minutes >= 0 && minutes < 60) {
+        
+        if (ptr != NULL) {
             strcpy(time, ptr);
             ptr = strtok(NULL, &delimiter);
 
-            //verifying valid steps input
-            if (ptr != NULL && sscanf(ptr,"%d",&number) == 1) {
-                //*steps = atoi(ptr);
+            if (ptr != NULL) {
                 
-            
                 strcpy(steps,ptr);
             }
-            else{
-                printf("Error: invalid file");
-                return 1;
-            }
-        }
-        else{
-            printf("Error: invalid file");
-            return 1;
-
         }
 
     }
-    else{
-        printf("Error: invalid file");
-        return 1;
-    }
+    
 }
 
 //function to tell the qsort function how to order the fitness array
@@ -84,7 +66,7 @@ int main() {
     int line_number = 0;
     int i = 0;
     char new_file[] = ".tsv";
-
+    int year, month, day, hours, minutes, number;
     //gets users file input
     printf("Enter Filename: ");
 
@@ -114,8 +96,30 @@ int main() {
         strcpy(fitness[i].time,time);
         fitness[i].steps = atoi(steps);
         
+        //verifying valid date input
+        if(sscanf(fitness[i].date,"%4d-%2d-%2d",&year,&month,&day) != 3){
+            
+            printf("Error: invalid file");
+            return 1;
+        }
+
+        //verifying valid time input
+        else if (sscanf(fitness[i].time,"%2d:%2d",&hours,&minutes) != 2 || hours < 0 || hours > 23 || minutes < 0 || minutes > 59){
+            
+            printf("Error: invalid file");
+            return 1;
+        }
+
+        //verifying valid steps input
+        else if(sscanf(steps,"%d",&number) != 1){
+            printf("%s",steps);
+            printf("Error: invalid file");
+            return 1;
+        }
         i++;
         line_number++;
+
+        
     }
     
     //built in function used to sort arrays
