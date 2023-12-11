@@ -74,7 +74,7 @@ int main() {
     //opens the file
 	FILE *file = fopen(filename,"r");
     if (file == NULL){
-        printf("Error opening file\n");
+        
         return 1;
         
     }
@@ -109,7 +109,7 @@ int main() {
 
     //write each element of fitness to the new file
     for(int i = 0; i < line_number;i++){
-        fprintf(file2, "%s  %s  %d\n", fitness[i].date,fitness[i].time,fitness[i].steps);
+        fprintf(file2, "%s %s %d\n", fitness[i].date,fitness[i].time,fitness[i].steps);
     }
     fclose(file2);
 
