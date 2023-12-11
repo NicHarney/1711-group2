@@ -10,7 +10,7 @@ typedef struct {
 } FitnessData;
 
 // Function to tokenize a record
-void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *steps) {
+void tokeniseRecord(char *record, char delimiter, char *date, char *time, char *steps) {
     char *ptr = strtok(record, &delimiter);
     if (ptr != NULL) {
         strcpy(date, ptr);
@@ -19,7 +19,8 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *s
             strcpy(time, ptr);
             ptr = strtok(NULL, &delimiter);
             if (ptr != NULL) {
-                *steps = atoi(ptr);
+                //*steps = atoi(ptr);
+                strcpy(steps,ptr);
             }
         }
     }
@@ -28,15 +29,16 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *s
 
 int compare(const void* num1, const void* num2){
 
-    int a = *(int*) num1;
-    int b = *(int*) num2;
+    const FitnessData *a = (const FitnessData *) num1;
+    const FitnessData *b = (const FitnessData *) num2;
+    
 
-    if (a > b){
+    if (a->steps > b->steps){
         return -1;
     
     }
 
-    else if (a < b){
+    else if (a->steps < b->steps){
         return 1;
     }
     return 0;
@@ -82,10 +84,11 @@ int main() {
         i++;
         line_number++;
     }
-    char temp_steps[1000] = fitness.steps;
-    qsort(temp_steps,line_number,sizeof(int),compare);
+    
+    
+    qsort(fitness,line_number,sizeof(FitnessData),compare);
 
-    for(int i = 0; i<3;i++){
+    for(int i = 0; i<line_number;i++){
 
         printf("%s/%s/%d\n",fitness[i].date,fitness[i].time,fitness[i].steps);
     }
